@@ -2,7 +2,7 @@
     <div id="primary">
         <div id="main">
             <div class="container">
-                <h2 class="search-text">Resultado da pesquisa: <span class="search-result"><?php echo get_search_query(); ?></span></h2>
+                <h2 class="search-text"><?php _e('Search results for: ', 'wpcurso'); ?><span class="search-result"><?php echo get_search_query(); ?></span></h2>
                 <span class="text-right"><?php get_search_form(); ?></span>
                 <?php 
                     while(have_posts()): the_post();
@@ -14,8 +14,8 @@
 
                     the_posts_pagination( 
                         array(
-                            'prev_text' => 'Previous',
-                            'next_text'  => 'Next',
+                            'prev_text' => __('Previous', 'wpcurso'),
+                            'next_text'  => __('Next', 'wpcurso'),
                             'screen_reader_text' =>  __( ' ' )
                         ) 
                     )

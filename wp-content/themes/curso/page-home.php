@@ -2,11 +2,15 @@
     <div class="content-area">
         <main>
             <section class="slide">
-                <?php echo do_shortcode( '[recent_post_slider design="design-2" limit="5"]' ); ?>
+                <?php 
+                $design = get_theme_mod( 'set_slider_option' );
+                $limit = get_theme_mod( 'set_slider_limit' );
+                echo do_shortcode( '[recent_post_slider design="design-'. $design .'" limit="'. $limit .'"]' ); 
+                ?>
             </section>
             <section class="services">
                 <div class="container">
-                    <h1>Our Services</h1>
+                    <h1><?php _e('Our Services', 'wpcurso'); ?></h1>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="services-item">
@@ -44,7 +48,7 @@
                         <?php get_sidebar( 'home' )?>
                         <div class="news col-md-8">
                             <div class="container">
-                                <h1>Latest News</h1>
+                                <h1><?php _e('Latest News', 'wpcurso'); ?></h1>
                                 <div class="row">
                                     <?php
                                     $feature = new WP_Query( 'post_type=post&posts_per_page=1&cat=4,8' );
@@ -87,12 +91,16 @@
             </section>
             <section class="map">
                 <img src="wp-content/uploads/2019/05/mapa.png" alt="Mapa do Google" height="350" width="100%">
+                <?php 
+                    /* $key = get_theme_mod( 'set_map_apikey' );
+                    $address = urlencode( get_theme_mod( 'set_map_address' ) ); */
+                ?>
                 <!--iframe
                 width="100%"
                 height="350"
                 frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY
-                &q=Space+Needle,Seattle+WA&zoom=15" allowfullscreen>
+                src="https://www.google.com/maps/embed/v1/place?key=<?php// echo $key ?>
+                &q=<?php //echo $address ?>&zoom=15" allowfullscreen>
                 </iframe-->
             </section>
         </main>

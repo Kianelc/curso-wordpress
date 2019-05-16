@@ -23,7 +23,7 @@ Template Name: General Template
                                 <?php the_content(); ?>
                             </article>
                         <?php endwhile; else: ?>
-                            <p>Não há posts no momento.</p>
+                            <p><?php _e('There&rsquo;s nothing yet to be displayed...', 'wpcurso')?></p>
                         <?php endif; ?>
                     </div>
                 </div>
