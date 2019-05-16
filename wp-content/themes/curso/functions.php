@@ -1,21 +1,37 @@
 <?php
 
+//Incluindo os arquivos da TGM
+require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
+require_once get_template_directory() . '/inc/required-plugins.php';
+
+//Chamando o arquivo do Customizer
+require get_template_directory() . '/inc/customizer.php';
+
 //Carrega os scripts e as folhas de estilos
 function load_scripts() {
     wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '4.3.1', true );
     wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all');
     wp_enqueue_style( 'template', get_template_directory_uri() . '/css/style.css', array(), '1.0', 'all');
+    wp_enqueue_script( 'fitvids', get_template_directory_uri() . '/js/fitvids.js', array( 'jquery' ), null, true );
 }
 
 add_action( 'wp_enqueue_scripts', 'load_scripts');
+
+function wpcurso_editor_styles(){
+    wp_enqueue_style( 'editor-styles', get_template_directory_uri() . '/css/style-editor.css' );
+    wp_enqueue_style( 'lato', 'https://fonts.googleapis.com/css?family=Lato:400,900' );
+    wp_enqueue_style( 'oswald', 'https://fonts.googleapis.com/css?family=Oswald:400,900' );
+}
+
+add_action( 'enqueue_block_editor_assets', 'wpcurso_editor_styles');
 
 //Função de configuração do tema
 function wpcurso_config(){
     //Registrando o menu
     register_nav_menus( 
         array(
-            'my_main_menu' => 'Main Menu',
-            'my_bottom_menu' => 'Bottom Menu'
+            'my_main_menu' => __('Main Menu', 'wpcurso'),
+            'my_bottom_menu' => __('Bottom Menu', 'wpcurso')
         )
     );
 
@@ -32,6 +48,29 @@ function wpcurso_config(){
     add_theme_support( 'post-formats', array('video','image') );
     //Torna o title do head dinâmico - é uma boa prática deixar aqui no functions
     add_theme_support( 'title-tag' );
+    //Habilita a inserção de logo na Aparência > Personalizar
+    add_theme_support( 'custom-logo', array( 'height' => 110, 'width' => 200 ) );
+
+    //Habilitar suporte à tradução
+    $textdomain = 'wpcurso';
+    load_theme_textdomain( $textdomain, get_stylesheet_directory() . '/languages/');
+    load_theme_textdomain( $textdomain, get_template_directory() . '/languages/');
+
+    //Suporte ao Gutenberg
+    add_theme_support( 'align-wide' );
+    add_theme_support( 'editor-color-palette', array(
+        array(
+            'name' => __('Blood Red', 'wpcurso'),
+            'slug' => 'blood-red',
+            'color' => '#b9121b'
+        ),
+        array(
+            'name' => __('White', 'wpcurso'),
+            'slug' => 'white',
+            'color' => '#ffffff'
+        )
+    ) );
+    add_theme_support( 'disable-custom-colors' );
 }
 
 add_action( 'after_setup_theme', 'wpcurso_config', 0 );
@@ -41,9 +80,9 @@ add_action( 'widgets_init', 'wpcurso_sidebars' );
 function wpcurso_sidebars(){
     register_sidebar( 
         array(
-            'name' => 'Home Page Sidebar',
+            'name' => __('Home Page Sidebar', 'wpcurso'),
             'id' => 'sidebar-1',
-            'description' => 'Sidebar to be used on Home Page',
+            'description' => __('Sidebar to be used on Home Page', 'wpcurso'),
             'before_widget' => '<div class="widget-wrapper">',
             'after_widget' => '</div>',
             'before_title' => '<h2 class="widget-title">',
@@ -52,9 +91,9 @@ function wpcurso_sidebars(){
     );
     register_sidebar( 
         array(
-            'name' => 'Blog Sidebar',
+            'name' => __('Blog Sidebar', 'wpcurso'),
             'id' =>  'sidebar-2',
-            'description' => 'Sidebar to be used on Blog Page',
+            'description' => __('Sidebar to be used on Blog Page', 'wpcurso'),
             'before_widget' => '<div class="widget-wrapper">',
             'after_widget' => '</div>',
             'before_title' => '<h2 class="widget-title">',
@@ -63,9 +102,9 @@ function wpcurso_sidebars(){
     );
     register_sidebar( 
         array(
-            'name' => 'Services 1',
+            'name' => __('Services 1', 'wpcurso'),
             'id' =>  'services-1',
-            'description' => 'First Services Area',
+            'description' => __('First Services Area', 'wpcurso'),
             'before_widget' => '<div class="widget-wrapper">',
             'after_widget' => '</div>',
             'before_title' => '<h2 class="widget-title">',
@@ -74,9 +113,9 @@ function wpcurso_sidebars(){
     );
     register_sidebar( 
         array(
-            'name' => 'Services 2',
+            'name' => __('Services 2', 'wpcurso'),
             'id' =>  'services-2',
-            'description' => 'Second Services Area',
+            'description' => __('Second Services Area', 'wpcurso'),
             'before_widget' => '<div class="widget-wrapper">',
             'after_widget' => '</div>',
             'before_title' => '<h2 class="widget-title">',
@@ -85,9 +124,9 @@ function wpcurso_sidebars(){
     );
     register_sidebar( 
         array(
-            'name' => 'Services 3',
+            'name' => __('Services 3', 'wpcurso'),
             'id' =>  'services-3',
-            'description' => 'Third Services Area',
+            'description' => __('Third Services Area', 'wpcurso'),
             'before_widget' => '<div class="widget-wrapper">',
             'after_widget' => '</div>',
             'before_title' => '<h2 class="widget-title">',
@@ -96,9 +135,9 @@ function wpcurso_sidebars(){
     );
     register_sidebar( 
         array(
-            'name' => 'Social Icons',
+            'name' => __('Social Icons', 'wpcurso'),
             'id' =>  'social-media',
-            'description' => 'Place your media icons here',
+            'description' => __('Place your media icons here', 'wpcurso'),
             'before_widget' => '<div class="widget-wrapper">',
             'after_widget' => '</div>',
             'before_title' => '<h2 class="widget-title">',
