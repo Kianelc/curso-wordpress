@@ -128,3 +128,36 @@ footer{ background: #000; padding: 15px 0; color: #fcfae1; }
 /* Pagination */
 .blog .pages, .archive .pages, .single .pages{ margin-bottom: 40px; }
 .pagination{ display: block; }
+
+/* Gutenberg */
+@media only screen and (min-width: 1140px) {
+    .alignfull, .alignwide {
+        margin-bottom: 2em;
+    }
+    .alignwide {
+        width: 75vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+    .alignfull{
+        width: 100vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.has-blood-red-background-color{
+    background-color: #b9121b;
+}
+
+.has-blood-red-color{
+    color: #b9121b;
+}
+
+.has-white-background-color{
+    background-color: #ffffff;
+}
+
+.has-white-color{
+    color: #ffffff;
+}
